@@ -1,4 +1,4 @@
-package com.kmhoon.mall.domain;
+package com.kmhoon.mall.domain.todo;
 
 import jakarta.persistence.*;
 import lombok.*;
