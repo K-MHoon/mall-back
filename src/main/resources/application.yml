@@ -11,3 +11,12 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+  servlet:
+    multipart:
+      max-request-size: 30MB
+      max-file-size: 10MB
+
+com:
+  kmhoon:
+    upload:
+      path: upload
