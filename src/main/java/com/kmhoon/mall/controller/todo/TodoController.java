@@ -8,6 +8,7 @@ import com.kmhoon.mall.service.todo.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,6 +28,7 @@ public class TodoController {
 
     @GetMapping("/list")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
     public PageResponseDto<TodoDto> list(PageRequestDto pageRequestDto) {
         log.info("List: " + pageRequestDto);
         return todoService.list(pageRequestDto);
