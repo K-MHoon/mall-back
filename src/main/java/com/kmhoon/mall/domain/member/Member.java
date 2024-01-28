@@ -8,6 +8,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Builder
@@ -21,7 +22,7 @@ public class Member {
 
     private String pw;
 
-    private String nickName;
+    private String nickname;
 
     private boolean social;
 
@@ -44,5 +45,13 @@ public class Member {
 
     public void changeSocial(boolean social) {
         this.social = social;
+    }
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public List<String> getRoleNames() {
+        return this.memberRoleList.stream().map(Enum::name).collect(Collectors.toList());
     }
 }

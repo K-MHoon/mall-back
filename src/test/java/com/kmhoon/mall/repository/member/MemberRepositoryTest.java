@@ -26,7 +26,7 @@ class MemberRepositoryTest {
             Member member = Member.builder()
                     .email("user" + i + "@aaa.com")
                     .pw(passwordEncoder.encode("1111"))
-                    .nickName("USER" + i)
+                    .nickname("USER" + i)
                     .build();
 
             member.addRole(MemberRole.USER);

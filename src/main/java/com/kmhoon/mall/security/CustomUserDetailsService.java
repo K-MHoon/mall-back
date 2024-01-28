@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         Member member = memberRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Not Found"));
 
-        MemberDto memberDto = new MemberDto(member.getEmail(), member.getPw(), member.getNickName(), member.isSocial(), member.getMemberRoleList().stream().map(MemberRole::name).collect(Collectors.toList()));
+        MemberDto memberDto = new MemberDto(member.getEmail(), member.getPw(), member.getNickname(), member.isSocial(), member.getMemberRoleList().stream().map(MemberRole::name).collect(Collectors.toList()));
 
         log.info(memberDto);
 
