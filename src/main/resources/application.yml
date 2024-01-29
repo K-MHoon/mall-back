@@ -16,6 +16,13 @@ spring:
       max-request-size: 30MB
       max-file-size: 10MB
 
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          web: trace
+
 com:
   kmhoon:
     upload:
