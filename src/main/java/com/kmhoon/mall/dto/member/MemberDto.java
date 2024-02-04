@@ -1,5 +1,6 @@
 package com.kmhoon.mall.dto.member;
 
+import com.kmhoon.mall.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -48,5 +49,9 @@ public class MemberDto extends User {
         dataMap.put("roleNames", this.roleNames);
 
         return dataMap;
+    }
+
+    public static MemberDto entityToDto(Member member) {
+        return new MemberDto(member.getEmail(), member.getPw(), member.getNickname(), member.isSocial(), member.getRoleNames());
     }
 }
