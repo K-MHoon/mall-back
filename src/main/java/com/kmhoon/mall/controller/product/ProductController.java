@@ -29,7 +29,7 @@ public class ProductController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    private ProductResponse.Register register(ProductDto productDto) {
+    public ProductResponse.Register register(ProductDto productDto) {
         log.info("register: " + productDto);
         List<MultipartFile> files = productDto.getFiles();
         List<String> uploadFileNames = fileUtil.saveFiles(files);
