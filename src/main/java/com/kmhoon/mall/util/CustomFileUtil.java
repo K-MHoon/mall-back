@@ -29,6 +29,8 @@ public class CustomFileUtil {
     @Value("${com.kmhoon.upload.path}")
     private String uploadPath;
 
+    private final CustomS3Util s3Util;
+
     @PostConstruct
     public void init() {
         File tempFolder = new File(uploadPath);
@@ -53,8 +55,12 @@ public class CustomFileUtil {
             String savedName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
             Path savePath = Paths.get(this.uploadPath, savedName);
 
+            List<Path> uploadTargetPaths = new ArrayList<>();
+
             try {
                 Files.copy(multipartFile.getInputStream(), savePath);
+
+                uploadTargetPaths.add(savePath);
 
                 String contentType = multipartFile.getContentType();
                 if(contentType != null && contentType.startsWith("image")) {
@@ -63,8 +69,14 @@ public class CustomFileUtil {
                     Thumbnails.of(savePath.toFile())
                             .size(200, 200)
                             .toFile(thumbnailPath.toFile());
+
+                    uploadTargetPaths.add(thumbnailPath);
                 }
                 uploadNames.add(savedName);
+
+                // s3 upload
+                s3Util.uploadFiles(uploadTargetPaths, true);
+
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
@@ -101,9 +113,17 @@ public class CustomFileUtil {
             Path thumbnailPath = Paths.get(this.uploadPath, thumbnailFileName);
             Path filePath = Paths.get(this.uploadPath, fileName);
 
+            List<Path> deleteTargetPaths = new ArrayList<>();
+
             try {
                 Files.deleteIfExists(filePath);
                 Files.deleteIfExists(thumbnailPath);
+
+                deleteTargetPaths.add(filePath);
+                deleteTargetPaths.add(thumbnailPath);
+
+                s3Util.deleteFiles(deleteTargetPaths);
+
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
